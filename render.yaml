@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: altinkasam
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    # Tek worker: giriş denemesi sınırlaması ve fiyat önbelleği tutarlı çalışsın diye
+    startCommand: gunicorn app:app --workers 1 --threads 4
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false   # Postgres bağlantı adresini Render panelinde siz girersiniz
